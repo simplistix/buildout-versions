@@ -18,7 +18,7 @@ setup(
     license='MIT',
     description="zc.buildout extension to display and record versions of packages used.",
     long_description=open(os.path.join(base_dir,'docs','description.txt')).read(),
-    url='http://packages.python.org/buildout-versions',
+    url='http://www.simplistix.co.uk/software/python/buildout-versions',
     classifiers=[
     'Development Status :: 5 - Production/Stable',
     'License :: OSI Approved :: MIT License',
