@@ -18,12 +18,7 @@ picked_versions = {}
 
 # code to patch in
 def _log_requirement(ws, req):
-    if not logger.isEnabledFor(logging.DEBUG):
-        # Sorting the working set and iterating over its requirements
-        # is expensive, so short cirtuit the work if it won't even be
-        # logged.
-        return
-    for dist in sorted(ws):
+    for dist in ws:
         if req in dist.requires():
             req_ = str(req)
             if req_ not in required_by:
