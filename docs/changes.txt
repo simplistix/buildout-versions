@@ -1,6 +1,14 @@
 Changes
 =======
 
+1.8 (unreleased)
+----------------
+
+- Merge speedup improvements reported by Ross Patterson. Modified his patch
+  to skip sorting working set and lazily figure out what distributions
+  required the dependency.
+  [iElectric]
+
 1.7 (28 Sep 2011)
 -----------------
 

@@ -19,8 +19,11 @@ picked::
   The following part definition lists the versions picked:
   [versions]
   buildout-versions = 1.2
-  setuptools = 0.6c11
   zc.buildout = 1.5.0
+
+  # Required by:
+  # zc.buildout==1.5.2
+  setuptools = 0.6c12dev-r88846
 
 .. -> expected
 
@@ -37,8 +40,11 @@ That output can be used to update the :file:`buildout.cfg`::
 
   [versions]
   buildout-versions = 1.2
-  setuptools = 0.6c11
   zc.buildout = 1.5.0
+
+  # Required by:
+  # zc.buildout==1.5.2
+  setuptools = 0.6c12dev-r88846
 
 .. -> buildout_cfg
 
@@ -66,8 +72,8 @@ version of python, then you can specify this in the versions section::
   [versions]
   python = 2.6
   buildout-versions = 1.2
-  setuptools = 0.6c11
   zc.buildout = 1.5.0
+  setuptools = 0.6c12dev-r88846
 
 .. -> buildout_cfg
 
@@ -92,8 +98,8 @@ doesn't match the python used to run the buildout::
   [versions]
   python = 1.0
   buildout-versions = 1.2
-  setuptools = 0.6c11
   zc.buildout = 1.5.0
+  setuptools = 0.6c12dev-r88846
 
 .. -> buildout_cfg
 
@@ -134,8 +140,11 @@ reported::
   The following part definition lists the versions picked:
   [versions]
   buildout-versions = 1.2
-  setuptools = 0.6c11
   zc.buildout = 1.5.0
+
+  # Required by:
+  # zc.buildout==1.5.2
+  setuptools = 0.6c12dev-r88846
 
 .. -> expected
 
@@ -158,7 +167,7 @@ it's version, as in the following example::
   [versions]
   buildout-versions = 1.2
   package-a = 1.0
-  setuptools = 0.6c11
+  setuptools = 0.6c12dev-r88846
   zc.buildout = 1.5.0
   zc.recipe.egg = 1.2.0
 
@@ -222,13 +231,16 @@ console::
   [versions]
   buildout-versions = 1.2
   package-a = 1.0
-  setuptools = 0.6c11
   zc.buildout = 1.5.0b2
   zc.recipe.egg = 1.2.3b2
 
   # Required by:
   # package-a==1.0
   package-b = 2.0
+
+  # Required by:
+  # zc.buildout==1.5.2
+  setuptools = 0.6c12dev-r88846
   This information has been written to 'versions.cfg'
 
 .. -> expected
@@ -239,13 +251,16 @@ written to :file:`versions.cfg`, which will contain::
   [versions]
   buildout-versions = 1.2
   package-a = 1.0
-  setuptools = 0.6c11
   zc.buildout = 1.5.0b2
   zc.recipe.egg = 1.2.3b2
 
   # Required by:
   # package-a==1.0
   package-b = 2.0
+
+  # Required by:
+  # zc.buildout==1.5.2
+  setuptools = 0.6c12dev-r88846
 
 .. -> expected_versions_cfg
 
@@ -336,7 +351,7 @@ Buildout Versions will also append the missing version to
   buildout_dir.write('base_versions.cfg',fix_buildout('''
   [versions]
   buildout-versions = 1.2
-  setuptools = 0.6c11
+  setuptools = 0.6c12dev-r88846
   zc.buildout = 1.5.0b2
   zc.recipe.egg = 1.2.3b2
   '''))
@@ -403,7 +418,7 @@ follows::
   
   [versions]
   buildout-versions = 1.2
-  setuptools = 0.6c11
+  setuptools = 0.6c12dev-r88846
   zc.buildout = 1.5.0
   zc.recipe.egg = 1.2.0
 

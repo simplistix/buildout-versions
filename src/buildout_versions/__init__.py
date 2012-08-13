@@ -17,14 +17,6 @@ required_by = {}
 picked_versions = {}
 
 # code to patch in
-def _log_requirement(ws, req):
-    for dist in sorted(ws):
-        if req in dist.requires():
-            req_ = str(req)
-            if req_ not in required_by:
-                required_by[req_] = set()
-            required_by[req_].add(str(dist.as_requirement()))
-
 original_get_dist = Installer._get_dist
 def _get_dist(self, requirement, ws, always_unzip):
     dists = original_get_dist(self, requirement, ws, always_unzip)
@@ -32,7 +24,19 @@ def _get_dist(self, requirement, ws, always_unzip):
         if not (dist.precedence == pkg_resources.DEVELOP_DIST or \
                   (len(requirement.specs) == 1 and \
                        requirement.specs[0][0] == '==')):
-            picked_versions[dist.project_name] = dist.version
+
+            # distribution is to be picked, figure out by
+            # which distribution it was required by
+            if not dist.project_name in picked_versions or \
+               picked_versions[dist.project_name] != dist.version:
+                for d in ws:
+                    if requirement in d.requires():
+                        req_ = str(requirement.project_name)
+                        if req_ not in required_by:
+                            required_by[req_] = set()
+                        required_by[req_].add(str(d.as_requirement()))
+
+                picked_versions[dist.project_name] = dist.version
     return dists
 
 def _constrain(self, requirement):
@@ -79,7 +83,6 @@ def start(buildout):
     default_versions(current_versions)
 
     # patch methods
-    easy_install._log_requirement = _log_requirement
     Installer._get_dist = _get_dist
     Installer._constrain = _constrain
 
