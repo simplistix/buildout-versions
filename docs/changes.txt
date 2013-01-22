@@ -1,6 +1,11 @@
 Changes
 =======
 
+1.8 (unreleased)
+-----------------
+
+- Added support for zc.buildout 2.0.
+
 1.7 (28 Sep 2011)
 -----------------
 
