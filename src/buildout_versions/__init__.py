@@ -11,7 +11,11 @@ from zc.buildout.easy_install import Installer
 from zc.buildout.easy_install import logger
 from zc.buildout.easy_install import IncompatibleVersionError
 from zc.buildout.easy_install import default_versions
-from zc.buildout.easy_install import is_distribute
+try:
+    from zc.buildout.easy_install import is_distribute
+except ImportError:
+    # Buildout 2.0: it always uses distribute
+    is_distribute = True
 
 required_by = {}
 picked_versions = {}
@@ -26,8 +30,13 @@ def _log_requirement(ws, req):
             required_by[req_].add(str(dist.as_requirement()))
 
 original_get_dist = Installer._get_dist
-def _get_dist(self, requirement, ws, always_unzip):
-    dists = original_get_dist(self, requirement, ws, always_unzip)
+def _get_dist(self, requirement, ws, always_unzip=None):
+    if always_unzip is None:
+        # Buildout 2.0+ always unzips and doesn't pass (and allow) the
+        # always_unzip argument anymore.
+        dists = original_get_dist(self, requirement, ws)
+    else:
+        dists = original_get_dist(self, requirement, ws, always_unzip)
     for dist in dists:
         if not (dist.precedence == pkg_resources.DEVELOP_DIST or \
                   (len(requirement.specs) == 1 and \
