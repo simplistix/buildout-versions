@@ -16,6 +16,12 @@ try:
 except ImportError:
     # Buildout 2.0: it always uses distribute
     is_distribute = True
+try:
+    from zc.buildout.easy_install import _constrained_requirement
+    # Buildout 2.0+ requirement parsing, handles '>=', too.
+except ImportError:
+    _constrained_requirement = None
+
 
 required_by = {}
 picked_versions = {}
@@ -54,10 +60,14 @@ def _constrain(self, requirement):
                          "requirement, %r.", version, str(requirement))
             raise IncompatibleVersionError("Bad version", version)
 
-        requirement = pkg_resources.Requirement.parse(
-            "%s[%s] ==%s" % (requirement.project_name,
-                           ','.join(requirement.extras),
-                           version))
+        if _constrained_requirement is None:
+            requirement = pkg_resources.Requirement.parse(
+                "%s[%s] ==%s" % (requirement.project_name,
+                                 ','.join(requirement.extras),
+                                 version))
+        else:
+            # Buildout 2 requirement parsing: handles '>=', too.
+            requirement = _constrained_requirement(version, requirement)
 
     return requirement
 
