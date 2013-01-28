@@ -3,7 +3,7 @@ Buildout Versions
 =================
 
 For full documentation please see:
-http://packages.python.org/buildout_versions
+http://packages.python.org/buildout-versions
 
 If working offline, please consult the documentation source in the
 `docs` directory.
